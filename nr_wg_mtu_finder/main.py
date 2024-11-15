@@ -38,7 +38,7 @@ class ArgsModel(BaseModel):
     interface: StrictStr = "wg0"
     conf_file: StrictStr = "/etc/wireguard/wg0.conf"
 
-    @root_validator(pre=False)
+    @root_validator(pre=False, skip_on_failure=True)
     def validate(cls, values):
         """Generic validations."""
         mtu_min, mtu_max, mtu_step = (
@@ -62,7 +62,7 @@ class ArgsModel(BaseModel):
 
     class Config:
         orm_mode = True
-
+        from_attributes = True
 
 def setup_args():
     """Setup args."""
